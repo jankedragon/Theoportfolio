@@ -5,8 +5,7 @@ export const structure: StructureResolver = (S) =>
   S.list()
     .title('Blog')
     .items([
-      S.documentTypeListItem('post').title('Posts'),
-      S.documentTypeListItem('category').title('Categories'),
+      S.documentTypeListItem('post').title('Blog Posts'),
       S.documentTypeListItem('author').title('Authors'),
       S.divider(),
       ...S.documentTypeListItems().filter(

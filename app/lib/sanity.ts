@@ -25,3 +25,26 @@ export function isSanityConfigured() {
     process.env.NEXT_PUBLIC_SANITY_DATASET
   )
 }
+
+// lib/sanity.js (or wherever your Sanity queries are)
+export async function getSiteSettings() {
+  return await client.fetch(`
+    *[_type == "siteSettings"][0]{
+      heroLabel,
+      name,
+      firstName,
+      lastName,
+      linkedinURL,
+      tagline,
+      avatar{
+        asset->{
+          _id,
+          url
+        },
+        alt
+      },
+      primaryButtonText,
+      secondaryButtonText
+    }
+  `)
+}

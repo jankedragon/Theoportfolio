@@ -1,9 +1,7 @@
 import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
 import './globals.css'
-import Navigation from './components/Navigation'
-
-const inter = Inter({ subsets: ['latin'] })
+import Header from './components/Header'
+import Footer from './components/Footer'
 
 export const metadata: Metadata = {
   title: 'Test Portfolio - Sanity CMS',
@@ -17,11 +15,15 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>
-        <Navigation />
-        <main className="min-h-screen">
-          {children}
-        </main>
+      <head>
+        <meta charSet="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Fname Lname</title>
+      </head>
+      <body>
+        <Header />
+        <main>{children}</main>
+        <Footer />
       </body>
     </html>
   )

@@ -1,5 +1,4 @@
-// This is the schema you'll need to add to your Sanity Studio
-// Create these files in your Sanity studio project
+
 
 // schemas/post.js
 export default {

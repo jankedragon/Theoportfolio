@@ -38,9 +38,11 @@ export const postType = defineType({
       ]
     }),
     defineField({
-      name: 'categories',
-      type: 'array',
-      of: [defineArrayMember({type: 'reference', to: {type: 'category'}})],
+      name: 'featured',
+      title: 'Featured Post',
+      type: 'boolean',
+      description: 'Check this to feature this post in the featured section (max 4 posts)',
+      initialValue: false,
     }),
     defineField({
       name: 'publishedAt',
@@ -56,10 +58,14 @@ export const postType = defineType({
       title: 'title',
       author: 'author.name',
       media: 'mainImage',
+      featured: 'featured',
     },
     prepare(selection) {
-      const {author} = selection
-      return {...selection, subtitle: author && `by ${author}`}
+      const {author, featured} = selection
+      return {
+        ...selection, 
+        subtitle: `${author ? `by ${author}` : ''}${featured ? ' • Featured' : ''}`
+      }
     },
   },
 })
