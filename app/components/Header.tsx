@@ -1,5 +1,4 @@
 "use client";
-
 import React, { useState, useEffect, useRef } from 'react';
 import { usePathname } from 'next/navigation';
 import Link from 'next/link';
@@ -14,6 +13,7 @@ const Header: React.FC = () => {
   const pathname = usePathname();
   const [underlineStyle, setUnderlineStyle] = useState({ left: 0, width: 0 });
   const [isLoaded, setIsLoaded] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const navLinksRef = useRef<{ [key: string]: HTMLAnchorElement | null }>({});
 
   // Define your navigation links
@@ -26,18 +26,18 @@ const Header: React.FC = () => {
     { href: '/contact', label: 'CONTACT', key: 'contact' },
   ];
 
-  // Function to update underline position
+  // Function to update underline position (desktop only)
   const updateUnderlinePosition = (activeKey: string) => {
     const activeElement = navLinksRef.current[activeKey];
     const tabLinksContainer = document.querySelector('.tab-links');
-    
-    if (activeElement && tabLinksContainer) {
+   
+    if (activeElement && tabLinksContainer && window.innerWidth > 768) {
       const activeRect = activeElement.getBoundingClientRect();
       const containerRect = tabLinksContainer.getBoundingClientRect();
-      
+     
       const leftOffset = activeRect.left - containerRect.left;
       const width = activeRect.width;
-      
+     
       setUnderlineStyle({
         left: leftOffset,
         width: width
@@ -47,20 +47,19 @@ const Header: React.FC = () => {
 
   // Get active link key based on current pathname
   const getActiveKey = (currentPath: string): string => {
-    // Handle exact matches first
     if (currentPath === '/') return 'home';
-    
-    // Handle nested routes (e.g., /blog/post-title should highlight blog)
+   
     const activeLink = navLinks.find(link => {
       if (link.href === '/') return currentPath === '/';
       return currentPath.startsWith(link.href);
     });
-    
+   
     return activeLink?.key || 'home';
   };
 
-  // Update underline when pathname changes
+  // Close mobile menu when route changes
   useEffect(() => {
+    setIsMobileMenuOpen(false);
     const activeKey = getActiveKey(pathname);
     updateUnderlinePosition(activeKey);
   }, [pathname]);
@@ -70,8 +69,11 @@ const Header: React.FC = () => {
     const handleResize = () => {
       const activeKey = getActiveKey(pathname);
       updateUnderlinePosition(activeKey);
+      // Close mobile menu on resize to desktop
+      if (window.innerWidth > 768) {
+        setIsMobileMenuOpen(false);
+      }
     };
-
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, [pathname]);
@@ -83,22 +85,26 @@ const Header: React.FC = () => {
       updateUnderlinePosition(activeKey);
       setIsLoaded(true);
     }, 100);
-
     return () => clearTimeout(timer);
   }, []);
+
+  const toggleMobileMenu = () => {
+    setIsMobileMenuOpen(!isMobileMenuOpen);
+  };
 
   return (
     <header className="nav-header">
       <div className="nav-inner">
-        {/* Enhanced Logo with aesthetic styling */}
+        {/* Logo */}
         <Link href="/" className="logo-minimal-border">
           TJ
         </Link>
-        
-        <nav className="tab-links">
+
+        {/* Desktop Navigation */}
+        <nav className="tab-links desktop-nav">
           {navLinks.map((link) => {
             const isActive = getActiveKey(pathname) === link.key;
-            
+           
             return (
               <Link
                 key={link.key}
@@ -112,7 +118,7 @@ const Header: React.FC = () => {
               </Link>
             );
           })}
-          
+         
           <div
             className={`nav-underline ${isLoaded ? 'loaded' : ''}`}
             style={{
@@ -121,6 +127,45 @@ const Header: React.FC = () => {
             }}
           />
         </nav>
+
+        {/* Mobile Hamburger Button */}
+        <button 
+          className="mobile-menu-toggle"
+          onClick={toggleMobileMenu}
+          aria-label="Toggle mobile menu"
+        >
+          <span className={`hamburger-line ${isMobileMenuOpen ? 'open' : ''}`}></span>
+          <span className={`hamburger-line ${isMobileMenuOpen ? 'open' : ''}`}></span>
+          <span className={`hamburger-line ${isMobileMenuOpen ? 'open' : ''}`}></span>
+        </button>
+
+        {/* Mobile Navigation Menu */}
+        <nav className={`mobile-nav ${isMobileMenuOpen ? 'open' : ''}`}>
+          <div className="mobile-nav-content">
+            {navLinks.map((link) => {
+              const isActive = getActiveKey(pathname) === link.key;
+             
+              return (
+                <Link
+                  key={link.key}
+                  href={link.href}
+                  className={`mobile-nav-link ${isActive ? 'active' : ''}`}
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  {link.label}
+                </Link>
+              );
+            })}
+          </div>
+        </nav>
+
+        {/* Mobile Menu Backdrop */}
+        {isMobileMenuOpen && (
+          <div 
+            className="mobile-menu-backdrop"
+            onClick={() => setIsMobileMenuOpen(false)}
+          />
+        )}
       </div>
     </header>
   );
