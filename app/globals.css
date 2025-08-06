@@ -3142,7 +3142,6 @@ body {
 }
 
 /* Mobile Navigation Styles */
-/* Mobile Navigation Styles */
 
 /* Hide desktop nav on mobile */
 @media (max-width: 768px) {
@@ -3264,20 +3263,36 @@ body {
   backdrop-filter: blur(2px);
 }
 
-/* Ensure header has proper positioning and is flush with page border */
+/* Ensure header has proper positioning and maintains original desktop styling */
 .nav-header {
+  background-color: var(--primary-black);
+  height: 100px;
+  display: flex;
+  align-items: center;
+  margin: 40px 40px 0 40px; /* Keep original desktop margins */
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
   position: relative;
   z-index: 100;
-  margin: 0;
-  padding: 0;
-  border-bottom: 0; /* Remove any border-bottom if it exists */
+}
+
+.nav-inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 0 40px; /* Keep original desktop padding */
 }
 
 /* Mobile-specific header adjustments */
 @media (max-width: 768px) {
+  .nav-header {
+    margin: 20px 20px 0 20px; /* Smaller margins for mobile */
+    height: 80px; /* Slightly shorter on mobile */
+  }
+  
   .nav-inner {
     justify-content: space-between;
-    padding: 0 20px;
+    padding: 0 20px; /* Less padding on mobile */
   }
   
   .logo-minimal-border {
