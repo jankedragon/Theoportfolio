@@ -3142,6 +3142,7 @@ body {
 }
 
 /* Mobile Navigation Styles */
+/* Mobile Navigation Styles */
 
 /* Hide desktop nav on mobile */
 @media (max-width: 768px) {
@@ -3206,7 +3207,7 @@ body {
   right: -100%;
   width: 280px;
   height: 100vh;
-  background: var(--background-color, #fff);
+  background: var(--primary-white, #EAE3DE);
   box-shadow: -2px 0 20px rgba(0, 0, 0, 0.1);
   transition: right 0.3s ease;
   z-index: 1000;
@@ -3230,20 +3231,20 @@ body {
   display: block;
   padding: 15px 0;
   text-decoration: none;
-  color: inherit;
+  color: var(--primary-black, #171313);
   font-weight: 600;
   font-size: 18px;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  border-bottom: 1px solid rgba(23, 19, 19, 0.1);
   transition: all 0.3s ease;
 }
 
 .mobile-nav-link:hover {
-  color: var(--accent-color, #007bff);
+  color: var(--accent-red, #8b0f0f);
   padding-left: 10px;
 }
 
 .mobile-nav-link.active {
-  color: var(--accent-color, #007bff);
+  color: var(--accent-red, #8b0f0f);
   font-weight: 700;
 }
 
@@ -3254,7 +3255,7 @@ body {
   left: 0;
   width: 100vw;
   height: 100vh;
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(23, 19, 19, 0.6);
   z-index: 999;
   backdrop-filter: blur(2px);
 }
@@ -3274,6 +3275,7 @@ body {
   
   .logo-minimal-border {
     z-index: 1001;
+    margin-left: 8px; /* Move logo slightly to the right on mobile */
   }
 }
 
