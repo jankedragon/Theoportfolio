@@ -3142,6 +3142,7 @@ body {
 }
 
 /* Mobile Navigation Styles */
+/* Mobile Navigation Styles */
 
 /* Hide desktop nav on mobile */
 @media (max-width: 768px) {
@@ -3153,11 +3154,11 @@ body {
 /* Hide mobile elements on desktop */
 @media (min-width: 769px) {
   .mobile-menu-toggle {
-    display: none;
+    display: none !important;
   }
   
   .mobile-nav {
-    display: none;
+    display: none !important;
   }
 }
 
@@ -3263,10 +3264,13 @@ body {
   backdrop-filter: blur(2px);
 }
 
-/* Ensure header has proper positioning */
+/* Ensure header has proper positioning and is flush with page border */
 .nav-header {
   position: relative;
   z-index: 100;
+  margin: 0;
+  padding: 0;
+  border-bottom: 0; /* Remove any border-bottom if it exists */
 }
 
 /* Mobile-specific header adjustments */
@@ -3277,8 +3281,8 @@ body {
   }
   
   .logo-minimal-border {
-    z-index: 1001;
-    margin-left: 2px; /* Move logo slightly to the right on mobile */
+    z-index: 999; /* Lower than mobile menu */
+    margin-left: 8px; /* Move logo slightly to the right on mobile */
   }
 }
 
