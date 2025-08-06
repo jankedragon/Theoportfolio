@@ -3142,7 +3142,6 @@ body {
 }
 
 /* Mobile Navigation Styles */
-/* Mobile Navigation Styles */
 
 /* Hide desktop nav on mobile */
 @media (max-width: 768px) {
@@ -3181,13 +3180,17 @@ body {
 .hamburger-line {
   width: 25px;
   height: 3px;
-  background-color: currentColor;
+  background-color: var(--primary-white, #EAE3DE);
   margin: 2px 0;
   transition: all 0.3s ease;
   transform-origin: center;
 }
 
-/* Hamburger Animation - Open State */
+/* Hamburger Animation - Open State (X becomes red) */
+.hamburger-line.open {
+  background-color: var(--accent-red, #8b0f0f);
+}
+
 .hamburger-line.open:nth-child(1) {
   transform: rotate(45deg) translate(6px, 6px);
 }
@@ -3275,7 +3278,7 @@ body {
   
   .logo-minimal-border {
     z-index: 1001;
-    margin-left: 8px; /* Move logo slightly to the right on mobile */
+    margin-left: 2px; /* Move logo slightly to the right on mobile */
   }
 }
 
