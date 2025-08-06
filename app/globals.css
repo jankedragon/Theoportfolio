@@ -3297,7 +3297,7 @@ body {
   
   .logo-minimal-border {
     z-index: 999; /* Lower than mobile menu */
-    margin-left: 8px; /* Move logo slightly to the right on mobile */
+    margin-left: 2px; /* Move logo slightly to the left on mobile */
   }
 }
 
