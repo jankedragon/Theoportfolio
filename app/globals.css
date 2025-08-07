@@ -3,6 +3,7 @@
 
 
 /* Your existing styles */
+/* Your existing styles */
 :root {
   --primary-black: #171313;
   --primary-white: #EAE3DE;
@@ -18,7 +19,7 @@ body {
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
   margin: 0;
   padding: 0;
-  background: var(--primary-white); /* Ensures the area outside .page-frame matches your off-white */
+  background: var(--primary-white);
   color: var(--primary-black);
 }
 
@@ -41,7 +42,7 @@ body {
 .main-blog-content {
   flex: 1 0 auto;
   padding: 40px;
-  background: var(--primary-white); /* Add this line */
+  background: var(--primary-white);
 }
 
 /* Header */
@@ -147,7 +148,7 @@ body {
   font-weight: 700;
   font-size: 2rem;
   letter-spacing: 2px;
-  font-family: 'Georgia', serif; /* or a clean sans-serif if you prefer */
+  font-family: 'Georgia', serif;
   transition: color 0.2s;
 }
 
@@ -164,7 +165,6 @@ body {
   padding: 4px 16px;
   border: 2px solid var(--primary-white);
   box-shadow: 0 2px 8px rgba(0,0,0,0.04);
-  /* Optional: add a subtle shadow for more pop */
 }
 
 .logo-initials {
@@ -227,7 +227,7 @@ body {
   position: absolute;
   bottom: 10px;
   height: 3px;
-  background: var(--accent-red); /* Single color underline */
+  background: var(--accent-red);
   border-radius: 2px;
   transition: left 0.4s cubic-bezier(0.4,0,0.2,1), 
               width 0.4s cubic-bezier(0.4,0,0.2,1),
@@ -335,38 +335,44 @@ body {
   color: var(--primary-white);
 }
 
-/* Mobile page frame adjustments - keep your existing margins */
+/* FIXED Mobile Responsive Styles */
 @media (max-width: 768px) {
+  /* Reduce page frame margins on mobile */
   .page-frame {
-    /* Keep your existing margin: 0 40px; */
-    overflow: hidden; /* Prevent any overflow */
-  }
-  
-  .home-window {
-    padding: 0; /* Remove any default padding */
-    margin: 0;
-    width: 100%;
-    box-sizing: border-box;
-  }
-}
-
-/* Mobile Responsive Styles */
-@media (max-width: 768px) {
-  .hero {
-    flex-direction: column;
-    gap: 12px;
-    text-align: center;
-    padding: 5px; /* Internal padding within the border */
-    width: 100%;
-    box-sizing: border-box;
+    margin: 0 20px; /* Reduced from 40px to 20px */
     overflow: hidden;
   }
   
+  .nav-header {
+    margin: 20px 20px 0 20px; /* Adjust header margin to match */
+  }
+  
+  .nav-inner {
+    padding: 0 20px; /* Adjust inner padding */
+  }
+  
+  .home-window {
+    padding: 20px; /* Reduced from 40px */
+  }
+  
+  .hero {
+    flex-direction: column;
+    gap: 20px;
+    text-align: center;
+    padding: 0; /* Remove any extra padding */
+    width: 100%;
+    box-sizing: border-box;
+    overflow: hidden;
+    align-items: center; /* Ensure proper centering */
+  }
+  
   .hero-content {
+    display: flex;
     flex-direction: column-reverse;
     width: 100%;
     max-width: 100%;
     box-sizing: border-box;
+    align-items: center;
   }
   
   .hero-text {
@@ -374,22 +380,22 @@ body {
     width: 100%;
     max-width: 100%;
     box-sizing: border-box;
+    text-align: center;
   }
   
   .avatar-container {
     order: 1;
-    margin-bottom: 10px;
+    margin-bottom: 20px;
     width: 100%;
     display: flex;
     justify-content: center;
   }
   
   .avatar {
-    width: 180px;
-    height: 150px;
-    max-width: 100%;
+    width: 200px;
     height: auto;
-    aspect-ratio: 1.2;
+    max-width: calc(100vw - 120px); /* Account for page margins and padding */
+    aspect-ratio: 410/344; /* Maintain original aspect ratio */
   }
   
   .avatar-frame {
@@ -398,52 +404,65 @@ body {
   }
   
   .hero-name {
-    font-size: clamp(24px, 7vw, 32px);
-    margin: 0 0 8px 0;
-    word-break: break-word;
-    hyphens: auto;
-    line-height: 1.1;
+    font-size: clamp(28px, 8vw, 40px);
+    margin: 0 0 12px 0;
+    line-height: 1.2;
     width: 100%;
     box-sizing: border-box;
+    text-align: center;
   }
   
   .hero-description {
-    font-size: 14px;
-    margin: 0 0 16px 0;
+    font-size: 16px;
+    margin: 0 0 20px 0;
     max-width: 100%;
-    line-height: 1.4;
+    line-height: 1.5;
     width: 100%;
     box-sizing: border-box;
+    text-align: center;
   }
   
   .hero-actions {
     justify-content: center;
-    gap: 8px;
+    gap: 12px;
     flex-wrap: wrap;
     width: 100%;
     box-sizing: border-box;
   }
   
   .cta-button {
-    padding: 8px 12px;
-    font-size: 11px;
+    padding: 12px 20px;
+    font-size: 12px;
     white-space: nowrap;
-    min-width: 0;
-    flex-shrink: 1;
+    min-width: 120px;
   }
 }
 
 /* Extra small screens */
 @media (max-width: 480px) {
+  .page-frame {
+    margin: 0 15px; /* Even smaller margins for very small screens */
+  }
+  
+  .nav-header {
+    margin: 15px 15px 0 15px;
+  }
+  
+  .nav-inner {
+    padding: 0 15px;
+  }
+  
+  .home-window {
+    padding: 15px;
+  }
+  
   .hero {
-    gap: 5px;
-    padding: 5px;
+    gap: 15px;
   }
   
   .avatar {
-    width: 180px;
-    height: 150px;
-    max-width: calc(100vw - 80px);
+    width: 160px;
+    max-width: calc(100vw - 90px);
   }
   
   .hero-name {
@@ -467,14 +486,7 @@ body {
     justify-content: center;
     padding: 12px 16px;
     font-size: 11px;
-  }
-  
-  .hero-separators {
-    margin: 12px 0;
-  }
-  
-  .hero-social {
-    margin-top: 12px;
+    min-width: 0;
   }
 }
 
