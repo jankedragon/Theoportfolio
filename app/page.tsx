@@ -1,4 +1,3 @@
-// Updated portion of your app/page.tsx
 'use client'
 import { client } from './lib/sanity'
 import { urlForImage } from './lib/sanity'
@@ -7,6 +6,8 @@ import Image from 'next/image'
 import { useEffect, useState } from 'react'
 import PortfolioCard from './components/PortfolioCard'
 import { transform } from 'next/dist/build/swc'
+
+// ... [Keep all your existing interfaces the same] ...
 
 interface BlogPost {
   _id: string
@@ -97,6 +98,8 @@ interface SiteSettings {
     contactSectionTitle?: string
     contactSectionDescription?: string
 }
+
+// ... [Keep all your existing async functions the same] ...
 
 async function getFeaturedPosts(): Promise<BlogPost[]> {
   try {
@@ -202,8 +205,6 @@ async function getRecentExperience(): Promise<ExperienceItem[]> {
 
 async function getSiteSettings(): Promise<SiteSettings | null> {
   try {
-    // Uncomment and adjust this when you have your Sanity client set up
-    
     const settings = await client.fetch(`
       *[_type == "siteSettings"][0]{
         heroLabel,
@@ -225,15 +226,14 @@ async function getSiteSettings(): Promise<SiteSettings | null> {
       }
     `)
     return settings || null
-    
-    
   } catch (error) {
     console.error('Error fetching site settings:', error)
     return null
   }
 }
 
-// Updated HomeQACard Component
+// ... [Keep your existing component functions the same] ...
+
 function HomeQACard({ post, index }: { post: QAPost; index: number }) {
   const formatDate = (date: string): string => {
     return new Date(date).toLocaleDateString('en-US', {
@@ -272,7 +272,6 @@ function HomeQACard({ post, index }: { post: QAPost; index: number }) {
   )
 }
 
-// Resume Preview Component
 function ResumePreviewCard({ experience }: { experience: ExperienceItem }) {
   const formatDate = (dateString: string) => {
     if (!dateString) return ''
@@ -291,7 +290,7 @@ function ResumePreviewCard({ experience }: { experience: ExperienceItem }) {
       boxShadow: '0 2px 8px rgba(0,0,0,0.04)',
       minWidth: '340px',
       maxWidth: '420px',
-      minHeight: '150px', // Increase this value for more height
+      minHeight: '150px',
       display: 'flex',
       flexDirection: 'column',
       justifyContent: 'space-between'
@@ -379,6 +378,41 @@ export default function Home() {
 
   const displayName = getDisplayName()
 
+  // Mobile-specific inline styles to force proper sizing
+  const getMobileNameStyles = () => {
+    if (typeof window !== 'undefined' && window.innerWidth <= 768) {
+      return {
+        fontSize: 'clamp(20px, 5vw, 28px)',
+        maxWidth: 'calc(100vw - 80px)',
+        wordWrap: 'break-word' as const,
+        overflowWrap: 'break-word' as const,
+        hyphens: 'auto' as const,
+        textAlign: 'center' as const,
+        lineHeight: '1.3',
+        margin: '0 0 12px 0',
+        boxSizing: 'border-box' as const
+      }
+    }
+    return {}
+  }
+
+  const getMobileDescriptionStyles = () => {
+    if (typeof window !== 'undefined' && window.innerWidth <= 768) {
+      return {
+        fontSize: '14px',
+        maxWidth: 'calc(100vw - 80px)',
+        wordWrap: 'break-word' as const,
+        overflowWrap: 'break-word' as const,
+        hyphens: 'auto' as const,
+        textAlign: 'center' as const,
+        lineHeight: '1.4',
+        margin: '0 0 20px 0',
+        boxSizing: 'border-box' as const
+      }
+    }
+    return {}
+  }
+
   return (
     <div className="page-frame">
       <div className="home-window">
@@ -392,19 +426,24 @@ export default function Home() {
                   {siteSettings?.heroLabel || 'MARKETING'}
                 </div>
                 
-                {/* Updated hero name with horizontal layout */}
+                {/* Updated hero name with mobile styles */}
                 <h1 
                   className={`hero-name ${glitchTrigger ? 'glitch-animate' : ''}`}
                   data-text={displayName}
                   onClick={handleNameClick}
-                  style={{ cursor: 'pointer' }}
+                  style={{ 
+                    cursor: 'pointer',
+                    ...getMobileNameStyles()
+                  }}
                 >
                   {displayName}
                 </h1>
                 
-                <p className="hero-description">
+                <p 
+                  className="hero-description"
+                  style={getMobileDescriptionStyles()}
+                >
                   {siteSettings?.tagline ? (
-                    // If tagline contains HTML or special formatting, you might need dangerouslySetInnerHTML
                     <span dangerouslySetInnerHTML={{ __html: siteSettings.tagline }} />
                   ) : (
                     <>
@@ -466,6 +505,7 @@ export default function Home() {
             </div>
           </section>
 
+          {/* Keep all your other sections exactly the same... */}
           {/* Blog Section */}
           <section className="blog-section">
             <div className="section-divider">Featured Blog Posts</div>
@@ -514,7 +554,6 @@ export default function Home() {
                   </div>
                 ) : (
                   <div className="home-blog-cards">
-                    {/* Fallback content if no featured posts */}
                     <div className="home-blog-card" style={{
                       display: 'flex',
                       flexDirection: 'column',
@@ -534,7 +573,6 @@ export default function Home() {
                 )}
               </div>
               
-              {/* View All Posts button on the right */}
               <div className="home-blog-button">
                 <Link 
                   href="/blog" 
@@ -559,7 +597,6 @@ export default function Home() {
                   </div>
                 ) : (
                   <div className="home-portfolio-cards">
-                    {/* Fallback content if no featured portfolio */}
                     <div className="home-portfolio-placeholder" style={{
                       display: 'flex',
                       flexDirection: 'column',
@@ -581,7 +618,6 @@ export default function Home() {
                 )}
               </div>
               
-              {/* View All Portfolio button on the right */}
               <div className="home-blog-button">
                 <Link 
                   href="/portfolio" 
@@ -594,9 +630,7 @@ export default function Home() {
           </section>
 
           {/* Resume Section */}
-          <section className="resume-section" style={{
-           
-          }}>
+          <section className="resume-section">
             <div className="section-divider">Professional Experience</div>
             <div className="home-blog-container" style={{
               display: 'flex',
@@ -651,7 +685,6 @@ export default function Home() {
                 )}
               </div>
               
-              {/* View Full Resume button on the right */}
               <div className="home-blog-button" style={{
                 alignSelf: 'center',
                 margin: 0,
@@ -756,8 +789,6 @@ export default function Home() {
           </section>
         </div>
       </div>
-
-      
     </div>
   )
 }
