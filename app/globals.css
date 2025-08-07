@@ -335,87 +335,119 @@ body {
   color: var(--primary-white);
 }
 
+/* Mobile page frame adjustments */
+@media (max-width: 768px) {
+  .page-frame {
+    margin: 0 20px; /* Reduce side margins */
+    min-height: calc(100vh - 40px);
+  }
+}
+
+@media (max-width: 480px) {
+  .page-frame {
+    margin: 0 12px; /* Further reduce on small screens */
+    min-height: calc(100vh - 24px);
+  }
+}
+
 /* Mobile Responsive Styles */
 @media (max-width: 768px) {
   .hero {
     flex-direction: column;
-    gap: 24px;
+    gap: 20px;
     text-align: center;
+    padding: 20px; /* Add internal padding */
   }
   
   .hero-content {
     flex-direction: column-reverse;
+    width: 100%;
   }
   
   .hero-text {
     order: 2;
+    width: 100%;
   }
   
   .avatar-container {
     order: 1;
-    margin-bottom: 16px;
+    margin-bottom: 12px;
   }
   
   .avatar {
-    width: 280px;
-    height: 240px;
+    width: 220px;
+    height: 185px;
+    max-width: calc(100vw - 120px); /* Account for page margins + padding */
   }
   
   .hero-name {
-    font-size: clamp(36px, 10vw, 48px);
-    margin: 0 0 12px 0;
+    font-size: clamp(28px, 8vw, 40px);
+    margin: 0 0 10px 0;
+    word-break: break-word;
   }
   
   .hero-description {
-    font-size: 16px;
-    margin: 0 0 24px 0;
+    font-size: 15px;
+    margin: 0 0 20px 0;
     max-width: none;
+    line-height: 1.5;
   }
   
   .hero-actions {
     justify-content: center;
-    gap: 12px;
+    gap: 10px;
+    flex-wrap: wrap;
   }
   
   .cta-button {
-    padding: 12px 20px;
-    font-size: 13px;
+    padding: 10px 16px;
+    font-size: 12px;
+    white-space: nowrap;
   }
 }
 
 /* Extra small screens */
 @media (max-width: 480px) {
   .hero {
-    gap: 20px;
+    gap: 16px;
+    padding: 16px;
   }
   
   .avatar {
-    width: 240px;
-    height: 200px;
+    width: 180px;
+    height: 150px;
+    max-width: calc(100vw - 80px);
   }
   
   .hero-name {
-    font-size: clamp(32px, 12vw, 42px);
+    font-size: clamp(24px, 9vw, 32px);
+    line-height: 1.2;
   }
   
   .hero-description {
-    font-size: 15px;
-    margin: 0 0 20px 0;
+    font-size: 14px;
+    margin: 0 0 16px 0;
   }
   
   .hero-actions {
     flex-direction: column;
     width: 100%;
+    gap: 8px;
   }
   
   .cta-button {
     width: 100%;
     justify-content: center;
-    padding: 14px 20px;
+    padding: 12px 16px;
+    font-size: 11px;
   }
   
   .hero-separators {
-    margin: 16px 0;
+    margin: 12px 0;
+  }
+  
+  .hero-social {
+    margin-top: 12px;
   }
 }
 
