@@ -339,7 +339,17 @@ export default function Home() {
   const [siteSettings, setSiteSettings] = useState<SiteSettings | null>(null)
   const [glitchTrigger, setGlitchTrigger] = useState(false)
 
+  // Mobile class detection
+  const [isMobile, setIsMobile] = useState(false)
+
   useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth <= 768)
+    }
+    
+    checkMobile()
+    window.addEventListener('resize', checkMobile)
+    
     const fetchData = async () => {
       const posts = await getFeaturedPosts()
       const portfolio = await getFeaturedPortfolio()
@@ -360,7 +370,10 @@ export default function Home() {
       setGlitchTrigger(true)
     }, 800)
 
-    return () => clearTimeout(timer)
+    return () => {
+      clearTimeout(timer)
+      window.removeEventListener('resize', checkMobile)
+    }
   }, [])
 
   const handleNameClick = () => {
@@ -378,41 +391,6 @@ export default function Home() {
 
   const displayName = getDisplayName()
 
-  // Mobile-specific inline styles to force proper sizing
-  const getMobileNameStyles = () => {
-    if (typeof window !== 'undefined' && window.innerWidth <= 768) {
-      return {
-        fontSize: 'clamp(20px, 5vw, 28px)',
-        maxWidth: 'calc(100vw - 80px)',
-        wordWrap: 'break-word' as const,
-        overflowWrap: 'break-word' as const,
-        hyphens: 'auto' as const,
-        textAlign: 'center' as const,
-        lineHeight: '1.3',
-        margin: '0 0 12px 0',
-        boxSizing: 'border-box' as const
-      }
-    }
-    return {}
-  }
-
-  const getMobileDescriptionStyles = () => {
-    if (typeof window !== 'undefined' && window.innerWidth <= 768) {
-      return {
-        fontSize: '14px',
-        maxWidth: 'calc(100vw - 80px)',
-        wordWrap: 'break-word' as const,
-        overflowWrap: 'break-word' as const,
-        hyphens: 'auto' as const,
-        textAlign: 'center' as const,
-        lineHeight: '1.4',
-        margin: '0 0 20px 0',
-        boxSizing: 'border-box' as const
-      }
-    }
-    return {}
-  }
-
   return (
     <div className="page-frame">
       <div className="home-window">
@@ -421,28 +399,22 @@ export default function Home() {
           {/* Hero Section */}
           <section className="hero">
             <div className="hero-content">
-              <div className="hero-text">
+              <div className={isMobile ? "hero-text-mobile" : "hero-text"}>
                 <div className="hero-label mono">
                   {siteSettings?.heroLabel || 'MARKETING'}
                 </div>
                 
-                {/* Updated hero name with mobile styles */}
+                {/* Updated hero name with mobile-specific classes */}
                 <h1 
-                  className={`hero-name ${glitchTrigger ? 'glitch-animate' : ''}`}
+                  className={`${isMobile ? 'hero-name-mobile' : 'hero-name'} ${glitchTrigger ? 'glitch-animate' : ''}`}
                   data-text={displayName}
                   onClick={handleNameClick}
-                  style={{ 
-                    cursor: 'pointer',
-                    ...getMobileNameStyles()
-                  }}
+                  style={{ cursor: 'pointer' }}
                 >
                   {displayName}
                 </h1>
                 
-                <p 
-                  className="hero-description"
-                  style={getMobileDescriptionStyles()}
-                >
+                <p className={isMobile ? "hero-description-mobile" : "hero-description"}>
                   {siteSettings?.tagline ? (
                     <span dangerouslySetInnerHTML={{ __html: siteSettings.tagline }} />
                   ) : (
