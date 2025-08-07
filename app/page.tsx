@@ -430,11 +430,17 @@ export default function Home() {
                 </div>
 
                 <div className="hero-actions">
-                  <Link href="/contact" className="cta-button primary">
-                    {siteSettings?.primaryButtonText || "Let's Work Together"}
+                  <Link 
+                    href="/contact" 
+                    className={`cta-button primary ${isMobile ? 'cta-button-mobile' : ''}`}
+                  >
+                    {isMobile ? "Let's Work" : (siteSettings?.primaryButtonText || "Let's Work Together")}
                   </Link>
-                  <Link href="/portfolio" className="cta-button secondary">
-                    {siteSettings?.secondaryButtonText || 'View Work'}
+                  <Link 
+                    href="/portfolio" 
+                    className={`cta-button secondary ${isMobile ? 'cta-button-mobile' : ''}`}
+                  >
+                    {isMobile ? "View Work" : (siteSettings?.secondaryButtonText || 'View Work')}
                   </Link>
                 </div>
 

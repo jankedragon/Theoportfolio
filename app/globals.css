@@ -3,7 +3,6 @@
 
 
 /* Your existing styles */
-/* Your existing styles */
 :root {
   --primary-black: #171313;
   --primary-white: #EAE3DE;
@@ -373,6 +372,16 @@ body {
   margin: 0 !important;
   box-sizing: border-box !important;
   text-align: center !important;
+}
+
+.cta-button-mobile {
+  padding: 10px 16px !important;
+  font-size: 11px !important;
+  min-width: 100px !important;
+  max-width: 140px !important;
+  white-space: nowrap !important;
+  text-overflow: ellipsis !important;
+  overflow: hidden !important;
 }
 
 /* FIXED Mobile Responsive Styles */
