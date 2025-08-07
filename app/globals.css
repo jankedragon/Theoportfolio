@@ -335,18 +335,18 @@ body {
   color: var(--primary-white);
 }
 
-/* Mobile page frame adjustments */
+/* Mobile page frame adjustments - keep your existing margins */
 @media (max-width: 768px) {
   .page-frame {
-    margin: 0 20px; /* Reduce side margins */
-    min-height: calc(100vh - 40px);
+    /* Keep your existing margin: 0 40px; */
+    overflow: hidden; /* Prevent any overflow */
   }
-}
-
-@media (max-width: 480px) {
-  .page-frame {
-    margin: 0 12px; /* Further reduce on small screens */
-    min-height: calc(100vh - 24px);
+  
+  .home-window {
+    padding: 0; /* Remove any default padding */
+    margin: 0;
+    width: 100%;
+    box-sizing: border-box;
   }
 }
 
@@ -354,55 +354,82 @@ body {
 @media (max-width: 768px) {
   .hero {
     flex-direction: column;
-    gap: 20px;
+    gap: 16px;
     text-align: center;
-    padding: 20px; /* Add internal padding */
+    padding: 16px; /* Internal padding within the border */
+    width: 100%;
+    box-sizing: border-box;
+    overflow: hidden;
   }
   
   .hero-content {
     flex-direction: column-reverse;
     width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
   }
   
   .hero-text {
     order: 2;
     width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
   }
   
   .avatar-container {
     order: 1;
-    margin-bottom: 12px;
+    margin-bottom: 10px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
   }
   
   .avatar {
-    width: 220px;
-    height: 185px;
-    max-width: calc(100vw - 120px); /* Account for page margins + padding */
+    width: 180px;
+    height: 150px;
+    max-width: 100%;
+    height: auto;
+    aspect-ratio: 1.2;
+  }
+  
+  .avatar-frame {
+    max-width: 100%;
+    box-sizing: border-box;
   }
   
   .hero-name {
-    font-size: clamp(28px, 8vw, 40px);
-    margin: 0 0 10px 0;
+    font-size: clamp(24px, 7vw, 32px);
+    margin: 0 0 8px 0;
     word-break: break-word;
+    hyphens: auto;
+    line-height: 1.1;
+    width: 100%;
+    box-sizing: border-box;
   }
   
   .hero-description {
-    font-size: 15px;
-    margin: 0 0 20px 0;
-    max-width: none;
-    line-height: 1.5;
+    font-size: 14px;
+    margin: 0 0 16px 0;
+    max-width: 100%;
+    line-height: 1.4;
+    width: 100%;
+    box-sizing: border-box;
   }
   
   .hero-actions {
     justify-content: center;
-    gap: 10px;
+    gap: 8px;
     flex-wrap: wrap;
+    width: 100%;
+    box-sizing: border-box;
   }
   
   .cta-button {
-    padding: 10px 16px;
-    font-size: 12px;
+    padding: 8px 12px;
+    font-size: 11px;
     white-space: nowrap;
+    min-width: 0;
+    flex-shrink: 1;
   }
 }
 
