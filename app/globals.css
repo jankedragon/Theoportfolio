@@ -236,7 +236,7 @@ body {
   box-shadow: 0 2px 8px rgba(220, 38, 38, 0.3);
 }
 
-/* Hero Section */
+/* Hero Section - Desktop styles remain the same */
 .hero {
   display: flex;
   justify-content: space-between;
@@ -301,7 +301,7 @@ body {
   pointer-events: none;
 }
 
-/* Buttons */
+/* Buttons - keeping your existing styles */
 .cta-button {
   background: var(--primary-black);
   color: var(--primary-white);
@@ -333,6 +333,90 @@ body {
 .cta-button.secondary:hover {
   background: var(--primary-black);
   color: var(--primary-white);
+}
+
+/* Mobile Responsive Styles */
+@media (max-width: 768px) {
+  .hero {
+    flex-direction: column;
+    gap: 24px;
+    text-align: center;
+  }
+  
+  .hero-content {
+    flex-direction: column-reverse;
+  }
+  
+  .hero-text {
+    order: 2;
+  }
+  
+  .avatar-container {
+    order: 1;
+    margin-bottom: 16px;
+  }
+  
+  .avatar {
+    width: 280px;
+    height: 240px;
+  }
+  
+  .hero-name {
+    font-size: clamp(36px, 10vw, 48px);
+    margin: 0 0 12px 0;
+  }
+  
+  .hero-description {
+    font-size: 16px;
+    margin: 0 0 24px 0;
+    max-width: none;
+  }
+  
+  .hero-actions {
+    justify-content: center;
+    gap: 12px;
+  }
+  
+  .cta-button {
+    padding: 12px 20px;
+    font-size: 13px;
+  }
+}
+
+/* Extra small screens */
+@media (max-width: 480px) {
+  .hero {
+    gap: 20px;
+  }
+  
+  .avatar {
+    width: 240px;
+    height: 200px;
+  }
+  
+  .hero-name {
+    font-size: clamp(32px, 12vw, 42px);
+  }
+  
+  .hero-description {
+    font-size: 15px;
+    margin: 0 0 20px 0;
+  }
+  
+  .hero-actions {
+    flex-direction: column;
+    width: 100%;
+  }
+  
+  .cta-button {
+    width: 100%;
+    justify-content: center;
+    padding: 14px 20px;
+  }
+  
+  .hero-separators {
+    margin: 16px 0;
+  }
 }
 
 /* Section Styling */
