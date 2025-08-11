@@ -1287,6 +1287,8 @@ body {
     border-radius: 12px 12px 0 0;
     text-align: center;
     justify-content: center;
+    border: 2px solid var(--primary-black);
+    border-bottom: none;
   }
   
   .qa-question h3 {
@@ -1316,6 +1318,11 @@ body {
   .qa-question,
   .qa-answer {
     padding: 20px 15px;
+    border: 2px solid var(--primary-black);
+  }
+  
+  .qa-question {
+    border-bottom: none;
   }
   
   .qa-question h3 {
