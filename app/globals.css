@@ -3267,7 +3267,7 @@ body {
 }
 
 
-/*Home resume section */
+/* Home resume section */
 .resume-preview-cards {
   display: flex;
   flex-wrap: wrap;
@@ -3282,6 +3282,12 @@ body {
   flex: 1;
   min-width: 280px;
   max-width: 350px;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.resume-preview-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 15px 30px rgba(23, 19, 19, 0.12);
 }
 
 .resume-preview-header {
@@ -3326,13 +3332,49 @@ body {
   min-width: 280px;
 }
 
-.resume-preview-card {
-  transition: transform 0.3s, box-shadow 0.3s;
+/* Mobile Responsive Styles */
+@media (max-width: 768px) {
+  .resume-preview-cards {
+    gap: 15px;
+  }
+  
+  .resume-preview-card {
+    min-width: unset;
+    width: 100%;
+    padding: 15px;
+  }
+  
+  .resume-preview-placeholder {
+    min-width: unset;
+    width: 100%;
+    padding: 25px 15px;
+  }
+  
+  .resume-preview-header h4 {
+    font-size: 16px;
+  }
 }
 
-.resume-preview-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 15px 30px rgba(23, 19, 19, 0.12);
+@media (max-width: 480px) {
+  .resume-preview-cards {
+    gap: 10px;
+  }
+  
+  .resume-preview-card {
+    padding: 12px;
+  }
+  
+  .resume-preview-placeholder {
+    padding: 20px 12px;
+  }
+  
+  .resume-preview-header h4 {
+    font-size: 15px;
+  }
+  
+  .resume-preview-company {
+    font-size: 13px;
+  }
 }
 
 /* Mobile Navigation Styles */

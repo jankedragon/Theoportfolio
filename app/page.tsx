@@ -650,7 +650,6 @@ export default function Home() {
                       padding: '30px',
                       textAlign: 'center',
                       flex: 1,
-                      minWidth: '280px'
                     }}>
                       <div className="resume-preview-header">
                         <h4>No Experience Added Yet</h4>
