@@ -1560,6 +1560,24 @@ body {
   }
 }
 
+@media (max-width: 1024px) {
+  .qa-question-home,
+  .qa-answer-home {
+    min-width: unset !important;
+    max-width: unset !important;
+    width: 100% !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .qa-question-home,
+  .qa-answer-home {
+    min-width: unset !important;
+    max-width: unset !important;
+    width: 100% !important;
+  }
+}
+
 @media (max-width: 768px) {
   .qa-list-home {
     gap: 30px;
