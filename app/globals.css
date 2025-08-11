@@ -1870,6 +1870,27 @@ body {
   margin-top: 12px;
 }
 
+/* Mobile responsive fixes */
+@media (max-width: 768px) {
+  .contact-form {
+    min-width: unset; /* Remove the 400px minimum width */
+    padding: 24px 16px; /* Reduce padding for smaller screens */
+    margin: 0 16px 48px 16px; /* Add horizontal margins */
+  }
+  
+  .contact-form-row {
+    flex-direction: column; /* Stack form row elements vertically on mobile */
+    gap: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .contact-form {
+    padding: 20px 12px; /* Even less padding for very small screens */
+    margin: 0 8px 48px 8px; /* Smaller margins */
+  }
+}
+
 /* Find Me Section */
 .find-me-section {
   margin: 48px 0;
