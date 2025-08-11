@@ -1098,7 +1098,7 @@ body {
   min-width: 300px;
   max-width: 400px;
   text-transform: uppercase;
-  border-radius: 0; /* Remove rounded corners */
+  border-radius: 0;
   display: flex;
   align-items: center;
   justify-content: flex-end;
@@ -1143,7 +1143,7 @@ body {
   max-width: 600px;
   border: 2px solid var(--primary-black);
   border-left: none;
-  border-radius: 0; /* Remove rounded corners */
+  border-radius: 0;
   display: flex;
   align-items: center;
   text-align: left;
@@ -1173,11 +1173,11 @@ body {
 }
 
 .qa-item:hover .qa-question {
-  background: #2a2424; /* Slightly lighter than primary-black for hover */
+  background: #2a2424;
 }
 
 .qa-item:hover .qa-answer {
-  background: #f0e9e4; /* Slightly darker than primary-white for hover */
+  background: #f0e9e4;
   border-color: #2a2424;
 }
 
@@ -1198,7 +1198,7 @@ body {
 
 .qa-date {
   font-size: 14px;
-  color: #8a7a7a; /* Muted version of your colors */
+  color: #8a7a7a;
   font-weight: 500;
   transition: color 0.3s ease;
 }
@@ -1249,6 +1249,14 @@ body {
 }
 
 /* Responsive Design */
+@media (max-width: 1024px) {
+  .qa-item:not(.qa-item-staggered),
+  .qa-item-staggered {
+    margin-left: 0;
+    margin-right: 0;
+  }
+}
+
 @media (max-width: 768px) {
   .qa-list {
     gap: 40px;
@@ -1257,8 +1265,8 @@ body {
   
   .qa-item:not(.qa-item-staggered),
   .qa-item-staggered {
-    margin-left: 0;
-    margin-right: 0;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
     flex-direction: column;
   }
   
@@ -1269,22 +1277,58 @@ body {
   
   .qa-question,
   .qa-answer {
-    min-width: unset;
-    max-width: unset;
+    min-width: unset !important;
+    max-width: unset !important;
     width: 100%;
   }
   
   .qa-question {
+    padding: 30px 20px;
     border-radius: 12px 12px 0 0;
     text-align: center;
     justify-content: center;
   }
   
+  .qa-question h3 {
+    font-size: 18px;
+    margin: 0 0 12px 0;
+  }
+  
   .qa-answer {
+    padding: 30px 20px;
     border-radius: 0 0 12px 12px;
     border: 2px solid var(--primary-black);
     border-top: none;
     text-align: left;
+  }
+  
+  .qa-answer p {
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .qa-list {
+    gap: 30px;
+    padding: 0 5px;
+  }
+  
+  .qa-question,
+  .qa-answer {
+    padding: 20px 15px;
+  }
+  
+  .qa-question h3 {
+    font-size: 16px;
+  }
+  
+  .qa-answer p {
+    font-size: 15px;
+  }
+  
+  .qa-meta span {
+    font-size: 12px;
+    padding: 4px 8px;
   }
 }
 
