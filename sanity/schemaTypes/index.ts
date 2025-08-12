@@ -12,5 +12,5 @@ import footerSettings from './footerSettings'
 import resumeFile from './resumeFile'
 
 export const schema: { types: SchemaTypeDefinition[] } = {
-  types: [blockContentType, postType, authorType, portfolio, qa, experience, resumeSection, siteSettings, footerSettings, resumeFile],
+  types: [blockContentType, postType, authorType, portfolio, qa, experience, resumeSection, resumeFile, siteSettings, footerSettings, ],
 }

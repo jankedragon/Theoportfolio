@@ -5,6 +5,7 @@ export const portfolio: SchemaTypeDefinition = defineType({
     name: 'portfolio',
   title: 'Portfolio',
   type: 'document',
+  icon: () => '👨‍💼',
   fields: [
     {
       name: 'title',

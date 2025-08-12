@@ -5,6 +5,7 @@ export default {
   name: 'siteSettings',
   title: 'Site Settings',
   type: 'document',
+  icon: () => '⚙️',
   fields: [
     {
       name: 'heroLabel',

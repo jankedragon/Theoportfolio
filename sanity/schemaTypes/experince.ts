@@ -1,7 +1,10 @@
+import { icons } from "@sanity/icons";
+
 export default {
   name: 'experience',
   title: 'Work Experience',
   type: 'document',
+  icon: () => '💼',
   fields: [
     {
       name: 'jobTitle',

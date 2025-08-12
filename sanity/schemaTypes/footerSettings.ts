@@ -3,6 +3,7 @@ export default {
   name: 'footerSettings',
   title: 'Footer Settings',
   type: 'document',
+  icon: () => '👟',
   __experimental_actions: [
     // Disable create and delete since we only want one footer settings document
     'update',

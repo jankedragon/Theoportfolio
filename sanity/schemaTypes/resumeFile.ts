@@ -3,6 +3,7 @@ export default {
   name: 'resumeFile',
   title: 'Resume PDF',
   type: 'document',
+  icon: () => '📄',
   fields: [
     {
       name: 'title',

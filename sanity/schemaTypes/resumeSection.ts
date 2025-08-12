@@ -2,6 +2,7 @@ export default {
   name: 'resumeSection',
   title: 'Resume Sections',
   type: 'document',
+  icon: () => '🏫',
   fields: [
     {
       name: 'title',
