@@ -895,6 +895,7 @@ body {
   width: 100%;
 }
 
+/*
 .portfolio-card {
   background: var(--primary-white);
   border: 1px solid var(--primary-black);
@@ -905,6 +906,7 @@ body {
   display: flex;
   flex-direction: column;
 }
+  */
 
 .portfolio-card:hover {
   transform: translateY(-4px);
