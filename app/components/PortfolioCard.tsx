@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from 'react'
 import Image from 'next/image'
 
+
 interface PortfolioPost {
   _id: string
   title: string
@@ -79,8 +80,7 @@ const PortfolioCard: React.FC<Props> = ({ post }) => {
           <Image
             src={post.previewImage?.asset.url || '/placeholder-image.jpg'}
             alt={post.previewImage?.alt || post.imageAlt || `Preview of ${post.title}`}
-            width={400}
-            height={224}
+            fill
             className="portfolio-card-image"
           />
           {/* Overlay */}
@@ -208,17 +208,17 @@ const PortfolioCard: React.FC<Props> = ({ post }) => {
           height: 14rem;
           width: 100%;
           overflow: hidden;
+          background-color: #f3f4f6; /* Fallback background */
         }
         
         .portfolio-card-image {
-          width: 100%;
-          height: 100%;
-          object-fit: cover;
+          object-fit: contain; /* Changed from 'cover' to 'contain' */
+          object-position: center;
           transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
         }
         
         .portfolio-card:hover .portfolio-card-image {
-          transform: scale(1.1);
+          transform: scale(1.05); /* Reduced scale to prevent overflow with contain */
         }
         
         .portfolio-card-overlay {
