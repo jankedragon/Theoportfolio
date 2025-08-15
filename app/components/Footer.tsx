@@ -2,14 +2,14 @@
 "use client";
 
 import { useState, useEffect } from 'react';
-import { client } from '../lib/sanity'; // Adjust import path as needed
+import { client } from '../lib/sanity'; 
 
 export default function Footer() {
   const [footerData, setFooterData] = useState({
-    name: 'Fname Lname',
-    location: 'City, State',
-    phone: '999-999-9999',
-    email: 'emailname@email.com',
+    name: '',
+    location: '',
+    phone: '',
+    email: '',
     linkedinUrl: ''
   });
 

@@ -34,9 +34,6 @@ export default async function QAPage() {
         <div className="page-hero">
           <div className="page-hero-content">
             <h1 className="page-hero-title">Questions & Answers</h1>
-            <p className="page-hero-text">
-              Find answers to frequently asked questions about my work process, approach, and expertise. Get insights into how we can collaborate effectively.
-            </p>
           </div>
         </div>
        

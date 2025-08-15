@@ -1,4 +1,6 @@
 import { getExperience, getResumeSections, getResumeFile } from '../lib/resume'
+import { PortableText } from '@portabletext/react'
+import Image from 'next/image'
 
 export default async function ResumePage() {
   let experience = []
@@ -44,21 +46,6 @@ export default async function ResumePage() {
       month: 'short' 
     })
   }
-
-  // Responsive grid styles
-  const getGridStyles = () => ({
-    display: 'grid',
-    gridTemplateColumns: 'minmax(0, 1fr) minmax(0, 350px)',
-    gap: '60px',
-    maxWidth: '1200px',
-    margin: '0 auto',
-    padding: '40px 20px',
-    '@media (max-width: 968px)': {
-      gridTemplateColumns: '1fr',
-      gap: '40px',
-      padding: '30px 15px'
-    }
-  })
 
   const mobileStyles = `
     <style>
@@ -143,6 +130,18 @@ export default async function ResumePage() {
         
         .section-inner-title {
           font-size: 18px !important;
+        }
+        
+        .job-header-mobile {
+          flex-direction: column !important;
+          align-items: flex-start !important;
+          gap: 16px !important;
+        }
+        
+        .job-header-mobile > div:first-child {
+          width: 50px !important;
+          height: 50px !important;
+          align-self: flex-start !important;
         }
       }
     </style>
@@ -248,88 +247,212 @@ export default async function ResumePage() {
                       border: '1px solid #f0f0f0',
                       boxShadow: '0 2px 8px rgba(0,0,0,0.04)'
                     }}>
-                      {/* Job Header */}
+                      {/* Job Header with Logo */}
                       <div className="job-header-mobile" style={{
                         display: 'flex',
-                        justifyContent: 'space-between',
                         alignItems: 'flex-start',
                         marginBottom: '16px',
-                        flexWrap: 'wrap',
-                        gap: '12px'
+                        gap: '16px',
+                        flexWrap: 'wrap'
                       }}>
-                        <div style={{ flex: 1, minWidth: '0' }}>
-                          <h3 className="job-title-mobile" style={{
-                            fontSize: '22px',
-                            fontWeight: '700',
-                            margin: '0 0 8px 0',
-                            color: 'var(--primary-black)',
-                            lineHeight: '1.3',
-                            wordWrap: 'break-word'
+                        {/* Company Logo */}
+                        {job.companyLogo && (
+                          <div style={{
+                            flexShrink: 0,
+                            width: '60px',
+                            height: '60px',
+                            position: 'relative',
+                            background: 'var(--primary-white)',
+                            border: '1px solid #f0f0f0',
+                            padding: '8px',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center'
                           }}>
-                            {job.jobTitle}
-                          </h3>
-                          <p className="company-mobile" style={{
-                            fontSize: '18px',
-                            color: 'var(--accent-red)',
-                            margin: '0',
-                            fontWeight: '600',
-                            wordWrap: 'break-word'
-                          }}>
-                            {job.company}
-                            {job.location && (
-                              <span style={{ 
-                                color: '#666', 
-                                fontWeight: '400',
-                                fontSize: '16px',
-                                display: 'block'
-                              }}>{job.location}</span>
-                            )}
-                          </p>
-                        </div>
-                        <div className="job-date-mobile" style={{
-                          background: 'var(--accent-red)',
-                          color: 'var(--primary-white)',
-                          padding: '8px 16px',
-                          fontSize: '14px',
-                          fontWeight: '600',
-                          whiteSpace: 'nowrap',
-                          boxShadow: '0 2px 4px rgba(139,15,15,0.2)',
-                          flexShrink: 0
+                            <Image
+                              src={job.companyLogo.asset.url}
+                              alt={job.companyLogo.alt || `${job.company} logo`}
+                              fill
+                              style={{
+                                objectFit: 'contain',
+                                padding: '4px'
+                              }}
+                              sizes="60px"
+                            />
+                          </div>
+                        )}
+                        
+                        {/* Job Info Container */}
+                        <div style={{ 
+                          flex: 1, 
+                          minWidth: '0',
+                          display: 'flex',
+                          justifyContent: 'space-between',
+                          alignItems: 'flex-start',
+                          flexWrap: 'wrap',
+                          gap: '12px'
                         }}>
-                          {formatDate(job.startDate)} - {job.current ? 'Present' : formatDate(job.endDate)}
+                          {/* Title and Company */}
+                          <div style={{ flex: 1, minWidth: '200px' }}>
+                            <h3 className="job-title-mobile" style={{
+                              fontSize: '22px',
+                              fontWeight: '700',
+                              margin: '0 0 8px 0',
+                              color: 'var(--primary-black)',
+                              lineHeight: '1.3',
+                              wordWrap: 'break-word'
+                            }}>
+                              {job.jobTitle}
+                            </h3>
+                            <p className="company-mobile" style={{
+                              fontSize: '18px',
+                              color: 'var(--accent-red)',
+                              margin: '0',
+                              fontWeight: '600',
+                              wordWrap: 'break-word'
+                            }}>
+                              {job.company}
+                              {job.location && (
+                                <span style={{ 
+                                  color: '#666', 
+                                  fontWeight: '400',
+                                  fontSize: '16px',
+                                  display: 'block'
+                                }}>
+                                  {job.location}
+                                </span>
+                              )}
+                            </p>
+                          </div>
+                          
+                          {/* Date Badge */}
+                          <div className="job-date-mobile" style={{
+                            background: 'var(--accent-red)',
+                            color: 'var(--primary-white)',
+                            padding: '8px 16px',
+                            fontSize: '14px',
+                            fontWeight: '600',
+                            whiteSpace: 'nowrap',
+                            boxShadow: '0 2px 4px rgba(139,15,15,0.2)',
+                            flexShrink: 0,
+                            alignSelf: 'flex-start'
+                          }}>
+                            {formatDate(job.startDate)} - {job.current ? 'Present' : formatDate(job.endDate)}
+                          </div>
                         </div>
                       </div>
 
-                      {/* Job Responsibilities */}
-                      {job.bulletPoints && job.bulletPoints.length > 0 && (
-                        <ul style={{
-                          listStyle: 'none',
-                          padding: '0',
-                          margin: '0'
+                      {/* Job Description */}
+                      {job.description && job.description.length > 0 && (
+                        <div style={{
+                          fontSize: '16px',
+                          lineHeight: '1.6',
+                          color: '#555'
                         }}>
-                          {job.bulletPoints.map((point, pointIndex) => (
-                            <li key={pointIndex} style={{
-                              position: 'relative',
-                              paddingLeft: '28px',
-                              marginBottom: '12px',
-                              fontSize: '16px',
-                              lineHeight: '1.6',
-                              color: '#555',
-                              wordWrap: 'break-word'
-                            }}>
-                              <span style={{
-                                position: 'absolute',
-                                left: '8px',
-                                top: '12px',
-                                width: '6px',
-                                height: '6px',
-                                background: 'var(--accent-red)',
-                                flexShrink: 0
-                              }}></span>
-                              {point}
-                            </li>
-                          ))}
-                        </ul>
+                          <PortableText 
+                            value={job.description}
+                            components={{
+                              block: {
+                                normal: ({children}) => (
+                                  <p style={{
+                                    margin: '0 0 16px 0',
+                                    wordWrap: 'break-word'
+                                  }}>
+                                    {children}
+                                  </p>
+                                ),
+                                h4: ({children}) => (
+                                  <h4 style={{
+                                    fontSize: '18px',
+                                    fontWeight: '600',
+                                    color: 'var(--primary-black)',
+                                    margin: '24px 0 12px 0'
+                                  }}>
+                                    {children}
+                                  </h4>
+                                )
+                              },
+                              list: {
+                                bullet: ({children}) => (
+                                  <ul style={{
+                                    listStyle: 'none',
+                                    padding: '0',
+                                    margin: '0 0 16px 0'
+                                  }}>
+                                    {children}
+                                  </ul>
+                                ),
+                                number: ({children}) => (
+                                  <ol style={{
+                                    paddingLeft: '28px',
+                                    margin: '0 0 16px 0',
+                                    color: '#555'
+                                  }}>
+                                    {children}
+                                  </ol>
+                                )
+                              },
+                              listItem: {
+                                bullet: ({children}) => (
+                                  <li style={{
+                                    position: 'relative',
+                                    paddingLeft: '28px',
+                                    marginBottom: '12px',
+                                    fontSize: '16px',
+                                    lineHeight: '1.6',
+                                    color: '#555',
+                                    wordWrap: 'break-word'
+                                  }}>
+                                    <span style={{
+                                      position: 'absolute',
+                                      left: '8px',
+                                      top: '12px',
+                                      width: '6px',
+                                      height: '6px',
+                                      background: 'var(--accent-red)',
+                                      flexShrink: 0
+                                    }}></span>
+                                    {children}
+                                  </li>
+                                ),
+                                number: ({children}) => (
+                                  <li style={{
+                                    marginBottom: '8px',
+                                    fontSize: '16px',
+                                    lineHeight: '1.6',
+                                    wordWrap: 'break-word'
+                                  }}>
+                                    {children}
+                                  </li>
+                                )
+                              },
+                              marks: {
+                                strong: ({children}) => (
+                                  <strong style={{fontWeight: '600'}}>{children}</strong>
+                                ),
+                                em: ({children}) => (
+                                  <em style={{fontStyle: 'italic'}}>{children}</em>
+                                ),
+                                underline: ({children}) => (
+                                  <span style={{textDecoration: 'underline'}}>{children}</span>
+                                ),
+                                link: ({value, children}) => (
+                                  <a 
+                                    href={value?.href} 
+                                    target="_blank" 
+                                    rel="noopener noreferrer"
+                                    style={{
+                                      color: 'var(--accent-red)',
+                                      textDecoration: 'underline'
+                                    }}
+                                  >
+                                    {children}
+                                  </a>
+                                )
+                              }
+                            }}
+                          />
+                        </div>
                       )}
                     </div>
                   ))}

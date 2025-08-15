@@ -5,9 +5,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { useEffect, useState } from 'react'
 import PortfolioCard from './components/PortfolioCard'
-import { transform } from 'next/dist/build/swc'
 
-// ... [Keep all your existing interfaces the same] ...
 
 interface BlogPost {
   _id: string
@@ -99,7 +97,7 @@ interface SiteSettings {
     contactSectionDescription?: string
 }
 
-// ... [Keep all your existing async functions the same] ...
+
 
 async function getFeaturedPosts(): Promise<BlogPost[]> {
   try {
@@ -232,7 +230,6 @@ async function getSiteSettings(): Promise<SiteSettings | null> {
   }
 }
 
-// ... [Keep your existing component functions the same] ...
 
 function HomeQACard({ post, index }: { post: QAPost; index: number }) {
   const formatDate = (date: string): string => {
@@ -401,7 +398,7 @@ export default function Home() {
             <div className="hero-content">
               <div className={isMobile ? "hero-text-mobile" : "hero-text"}>
                 <div className="hero-label mono">
-                  {siteSettings?.heroLabel || 'MARKETING'}
+                  {siteSettings?.heroLabel || ''}
                 </div>
                 
                 {/* Updated hero name with mobile-specific classes */}
@@ -419,7 +416,7 @@ export default function Home() {
                     <span dangerouslySetInnerHTML={{ __html: siteSettings.tagline }} />
                   ) : (
                     <>
-                      Your tagline description goes here — <em>making complex ideas accessible</em>
+                      
                     </>
                   )}
                 </p>
@@ -469,7 +466,7 @@ export default function Home() {
                         .height(450)
                         .quality(90)
                         .url()}
-                      alt={siteSettings.avatar.alt || displayName || 'Hero Image'} 
+                      alt={siteSettings.avatar.alt || displayName || ' '} 
                     />
                   ) : (
                     <img 
@@ -486,7 +483,7 @@ export default function Home() {
           {/* Keep all your other sections exactly the same... */}
           {/* Blog Section */}
           <section className="blog-section">
-            <div className="section-divider">Featured Blog Posts</div>
+            <div className="section-divider">Blog</div>
             <div className="home-blog-container">
               <div className="home-blog-posts">
                 {featuredPosts.length > 0 ? (
@@ -564,7 +561,7 @@ export default function Home() {
 
           {/* Portfolio Section */}
           <section className="portfolio-section">
-            <div className="section-divider">Featured Portfolio</div>
+            <div className="section-divider">Work</div>
             <div className="home-portfolio-container">
               <div className="home-portfolio-posts">
                 {featuredPortfolio.length > 0 ? (
@@ -680,7 +677,7 @@ export default function Home() {
 
           {/* Q&A Section */}
           <section className="qa-section">
-            <div className="section-divider">Questions & Answers</div>
+            <div className="section-divider">Q&A</div>
             <div className="qa-home-container">
               <div className="qa-home-content">
                 {featuredQA.length > 0 ? (

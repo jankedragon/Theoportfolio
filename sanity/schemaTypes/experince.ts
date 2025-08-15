@@ -1,5 +1,3 @@
-import { icons } from "@sanity/icons";
-
 export default {
   name: 'experience',
   title: 'Work Experience',
@@ -42,11 +40,63 @@ export default {
       type: 'string'
     },
     {
-      name: 'bulletPoints',
-      title: 'Responsibilities & Achievements',
+      name: 'companyLogo',
+      title: 'Company Logo',
+      type: 'image',
+      description: 'Upload a small company logo (recommended: square format, PNG with transparent background)',
+      options: {
+        hotspot: false, // Disable hotspot since logos don't need it
+        accept: '.png,.jpg,.jpeg,.svg' // Accept common logo formats
+      },
+      fields: [
+        {
+          name: 'alt',
+          title: 'Alt Text',
+          type: 'string',
+          description: 'Describe the logo for accessibility (e.g., "Acme Corp logo")'
+        }
+      ]
+    },
+    {
+      name: 'description',
+      title: 'Job Description & Achievements',
       type: 'array',
-      of: [{type: 'string'}],
-      description: 'Add bullet points for this role'
+      of: [
+        {
+          type: 'block',
+          // Customize which formatting options are available
+          styles: [
+            {title: 'Normal', value: 'normal'},
+            {title: 'H4', value: 'h4'},
+          ],
+          lists: [
+            {title: 'Bullet', value: 'bullet'},
+            {title: 'Number', value: 'number'}
+          ],
+          marks: {
+            decorators: [
+              {title: 'Strong', value: 'strong'},
+              {title: 'Emphasis', value: 'em'},
+              {title: 'Underline', value: 'underline'}
+            ],
+            annotations: [
+              {
+                title: 'URL',
+                name: 'link',
+                type: 'object',
+                fields: [
+                  {
+                    title: 'URL',
+                    name: 'href',
+                    type: 'url'
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ],
+      description: 'Describe your responsibilities, achievements, and key projects. You can use bullet points, paragraphs, or any combination.'
     },
     {
       name: 'order',

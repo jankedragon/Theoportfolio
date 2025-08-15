@@ -231,9 +231,6 @@ export default async function BlogPage({
         <div className="page-hero">
           <div className="page-hero-content">
             <h1 className="page-hero-title">Blog</h1>
-            <p className="page-hero-text">
-              Dive deeper into my creative process, design insights, and behind-the-scenes stories from recent projects and collaborative experiences.
-            </p>
           </div>
         </div>
 

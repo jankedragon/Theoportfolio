@@ -172,7 +172,7 @@ const PortfolioCard: React.FC<Props> = ({ post }) => {
                   </div>
                 )}
                 <iframe
-                  src={`${post.pdfFile.asset.url}#toolbar=1&navpanes=0&scrollbar=1`}
+                  src={`${post.pdfFile.asset.url}#view=FitH&toolbar=1&navpanes=1&scrollbar=1`}
                   className="portfolio-pdf-iframe"
                   onLoad={() => setIsLoading(false)}
                   title={`PDF for ${post.title}`}

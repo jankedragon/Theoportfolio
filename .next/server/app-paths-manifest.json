@@ -1,9 +1,8 @@
 {
-  "/not-found": "app/not-found.js",
-  "/resume/page": "app/resume/page.js",
-  "/studio/[[...tool]]/page": "app/studio/[[...tool]]/page.js",
-  "/portfolio/page": "app/portfolio/page.js",
+  "/page": "app/page.js",
   "/qa/page": "app/qa/page.js",
-  "/contact/page": "app/contact/page.js",
-  "/page": "app/page.js"
+  "/blog/page": "app/blog/page.js",
+  "/portfolio/page": "app/portfolio/page.js",
+  "/resume/page": "app/resume/page.js",
+  "/studio/[[...tool]]/page": "app/studio/[[...tool]]/page.js"
 }

@@ -36,10 +36,6 @@ export default async function PortfolioPage() {
         <div className="page-hero">
           <div className="page-hero-content">
             <h1 className="page-hero-title">Portfolio</h1>
-            <p className="page-hero-text">
-              Explore my collection of design work, branding projects, and creative solutions 
-              that bring ideas to life through thoughtful visual communication.
-            </p>
           </div>
         </div>
         

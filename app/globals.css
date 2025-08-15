@@ -895,18 +895,6 @@ body {
   width: 100%;
 }
 
-/*
-.portfolio-card {
-  background: var(--primary-white);
-  border: 1px solid var(--primary-black);
-  border-radius: 8px;
-  overflow: hidden;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-}
-  */
 
 .portfolio-card:hover {
   transform: translateY(-4px);
@@ -1006,7 +994,6 @@ body {
   width: 100%;
   height: 100%;
   border: none;
-  pointer-events: none;
 }
 
 .portfolio-pdf-iframe.expanded {
@@ -1999,11 +1986,7 @@ body {
   letter-spacing: 0.5px;
 }
 
-.footer-location {
-  color: var(--gray-300, #d1d5db);
-  font-style: italic;
-}
-
+.footer-location a,
 .footer-phone a,
 .footer-email a,
 .footer-linkedin a {
@@ -2015,12 +1998,14 @@ body {
   line-height: 1.5;
 }
 
+.footer-location a,
 .footer-phone a:hover,
 .footer-email a:hover,
 .footer-linkedin a:hover {
   color: var(--gray-100);
 }
 
+.footer-location a,
 .footer-phone a::after,
 .footer-email a::after,
 .footer-linkedin a::after {
@@ -2034,6 +2019,7 @@ body {
   transition: width 0.3s ease;
 }
 
+.footer-location a,
 .footer-phone a:hover::after,
 .footer-email a:hover::after,
 .footer-linkedin a:hover::after {
@@ -2941,13 +2927,7 @@ body {
   animation: pageHeroExpandWidth 0.8s ease-out 1.2s both;
 }
 
-/* Description Text */
-.page-hero-text {
-  font-size: 16px;
-  opacity: 0;
-  line-height: 1.8;
-  animation: pageHeroFadeSlideUp 0.8s ease-out 0.8s both;
-}
+
 
 /* Responsive Design */
 @media (max-width: 768px) {
@@ -3638,4 +3618,25 @@ body {
 /* Prevent body scroll when mobile menu is open */
 body.mobile-menu-open {
   overflow: hidden;
+}
+
+@media (max-width: 640px) {
+  .job-header-mobile {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 16px !important;
+  }
+  
+  .job-header-mobile > div:first-child {
+    /* Company logo container */
+    width: 50px !important;
+    height: 50px !important;
+    align-self: flex-start !important;
+  }
+  
+  .job-date-mobile {
+    align-self: flex-start !important;
+    font-size: 13px !important;
+    padding: 6px 12px !important;
+  }
 }
