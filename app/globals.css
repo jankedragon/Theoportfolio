@@ -255,12 +255,27 @@ body {
   font-size: clamp(48px, 8vw, 64px);
   font-weight: 600;
   margin: 0 0 16px 0;
-  line-height: 1.1;
+  line-height: 1.3;
   letter-spacing: -0.02em;
+  
+  /* Word wrapping properties */
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  hyphens: auto;
+  
+  /* Container constraints */
+  max-width: 100%;
+  width: 100%;
+  
+  /* Force wrapping if needed */
+  white-space: normal;
+  
+  /* Prevent overflow */
+  overflow: visible;
 }
 
 .hero-description {
-  font-size: 18px;
+  font-size: 22px;
   line-height: 1.6;
   color: var(--gray-600);
   margin: 0 0 32px 0;

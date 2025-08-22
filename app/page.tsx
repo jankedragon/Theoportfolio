@@ -480,7 +480,177 @@ export default function Home() {
             </div>
           </section>
 
-          {/* Keep all your other sections exactly the same... */}
+                  {/* Resume Section */}
+          <section className="resume-section">
+            <div className="section-divider">Professional Experience</div>
+            <div className="home-blog-container" style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '40px',
+              minHeight: 'auto',
+              marginTop: '10px',
+              marginBottom: '10px'
+            }}>
+              <div className="home-blog-posts" style={{
+                flex: 1,
+                margin: 0,
+                paddingTop: 0,
+                paddingBottom: 0
+              }}>
+                {recentExperience.length > 0 ? (
+                  <div className="resume-preview-cards" style={{
+                    display: 'flex',
+                    flexWrap: 'wrap',
+                    gap: '20px',
+                    margin: 0,
+                    padding: 0
+                  }}>
+                    {recentExperience.map((experience) => (
+                      <ResumePreviewCard key={experience._id} experience={experience} />
+                    ))}
+                  </div>
+                ) : (
+                  <div className="resume-preview-cards" style={{
+                    display: 'flex',
+                    flexWrap: 'wrap',
+                    gap: '20px',
+                    margin: 0,
+                    padding: 0
+                  }}>
+                    <div className="resume-preview-placeholder" style={{
+                      background: '#f9f9f9',
+                      border: '2px dashed var(--primary-black)',
+                      padding: '30px',
+                      textAlign: 'center',
+                      flex: 1,
+                    }}>
+                      <div className="resume-preview-header">
+                        <h4>No Experience Added Yet</h4>
+                      </div>
+                      <div className="resume-preview-company">
+                        Add your work experience through Sanity Studio to display it here.
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </div>
+              
+              <div className="home-blog-button" style={{
+                alignSelf: 'center',
+                margin: 0,
+                paddingTop: 0,
+                paddingBottom: 0
+              }}>
+                <Link 
+                  href="/resume" 
+                  className="btn-primary home-blog-view-all"
+                >
+                  View Full Resume →
+                </Link>
+              </div>
+            </div>
+          </section>
+          
+
+          {/* Portfolio Section */}
+          <section className="portfolio-section">
+            <div className="section-divider">Work</div>
+            <div className="home-portfolio-container">
+              <div className="home-portfolio-posts">
+                {featuredPortfolio.length > 0 ? (
+                  <div className="home-portfolio-cards">
+                    {featuredPortfolio.map((post) => (
+                      <PortfolioCard key={post._id} post={post} />
+                    ))}
+                  </div>
+                ) : (
+                  <div className="home-portfolio-cards">
+                    <div className="home-portfolio-placeholder" style={{
+                      display: 'flex',
+                      flexDirection: 'column',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      minHeight: '260px',
+                      backgroundColor: '#f9f9f9',
+                      border: '1px solid #ddd',
+                      borderRadius: '4px'
+                    }}>
+                      <h3 style={{ color: '#666', textAlign: 'center' }}>
+                        No featured portfolio yet
+                      </h3>
+                      <p style={{ color: '#999', fontSize: '14px', textAlign: 'center' }}>
+                        Mark some portfolio items as featured in Sanity Studio
+                      </p>
+                    </div>
+                  </div>
+                )}
+              </div>
+              
+              <div className="home-blog-button">
+                <Link 
+                  href="/portfolio" 
+                  className="btn-primary home-blog-view-all"
+                >
+                  View All Work →
+                </Link>
+              </div>
+            </div>
+          </section>
+
+          
+
+          {/* Q&A Section */}
+          <section className="qa-section">
+            <div className="section-divider">Q&A</div>
+            <div className="qa-home-container">
+              <div className="qa-home-content">
+                {featuredQA.length > 0 ? (
+                  <div className="qa-cards-row">
+                    {featuredQA.slice(0, 2).map((post, index) => (
+                      <HomeQACard key={post._id} post={post} index={index} />
+                    ))}
+                  </div>
+                ) : (
+                  <div className="qa-cards-row">
+                    <div className="qa-card-vertical qa-placeholder-vertical">
+                      <div className="qa-question-vertical">
+                        <div>
+                          <h3>No Featured Q&As Yet</h3>
+                        </div>
+                      </div>
+                      <div className="qa-answer-vertical">
+                        <div>
+                          <p>Mark some Q&A items as featured in Sanity Studio to display them here as a preview.</p>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="qa-card-vertical qa-placeholder-vertical">
+                      <div className="qa-question-vertical">
+                        <div>
+                          <h3>Coming Soon</h3>
+                        </div>
+                      </div>
+                      <div className="qa-answer-vertical">
+                        <div>
+                          <p>More Q&A content will be added here as the site grows and develops.</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </div>
+              
+              <div className="home-blog-button">
+                <Link 
+                  href="/qa" 
+                  className="btn-primary home-blog-view-all"
+                >
+                  View All Q&As →
+                </Link>
+              </div>
+            </div>
+          </section>
+          
           {/* Blog Section */}
           <section className="blog-section">
             <div className="section-divider">Blog</div>
@@ -554,174 +724,6 @@ export default function Home() {
                   className="btn-primary home-blog-view-all"
                 >
                   View All Posts →
-                </Link>
-              </div>
-            </div>
-          </section>
-
-          {/* Portfolio Section */}
-          <section className="portfolio-section">
-            <div className="section-divider">Work</div>
-            <div className="home-portfolio-container">
-              <div className="home-portfolio-posts">
-                {featuredPortfolio.length > 0 ? (
-                  <div className="home-portfolio-cards">
-                    {featuredPortfolio.map((post) => (
-                      <PortfolioCard key={post._id} post={post} />
-                    ))}
-                  </div>
-                ) : (
-                  <div className="home-portfolio-cards">
-                    <div className="home-portfolio-placeholder" style={{
-                      display: 'flex',
-                      flexDirection: 'column',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      minHeight: '260px',
-                      backgroundColor: '#f9f9f9',
-                      border: '1px solid #ddd',
-                      borderRadius: '4px'
-                    }}>
-                      <h3 style={{ color: '#666', textAlign: 'center' }}>
-                        No featured portfolio yet
-                      </h3>
-                      <p style={{ color: '#999', fontSize: '14px', textAlign: 'center' }}>
-                        Mark some portfolio items as featured in Sanity Studio
-                      </p>
-                    </div>
-                  </div>
-                )}
-              </div>
-              
-              <div className="home-blog-button">
-                <Link 
-                  href="/portfolio" 
-                  className="btn-primary home-blog-view-all"
-                >
-                  View All Work →
-                </Link>
-              </div>
-            </div>
-          </section>
-
-          {/* Resume Section */}
-          <section className="resume-section">
-            <div className="section-divider">Professional Experience</div>
-            <div className="home-blog-container" style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: '40px',
-              minHeight: 'auto',
-              marginTop: '10px',
-              marginBottom: '10px'
-            }}>
-              <div className="home-blog-posts" style={{
-                flex: 1,
-                margin: 0,
-                paddingTop: 0,
-                paddingBottom: 0
-              }}>
-                {recentExperience.length > 0 ? (
-                  <div className="resume-preview-cards" style={{
-                    display: 'flex',
-                    flexWrap: 'wrap',
-                    gap: '20px',
-                    margin: 0,
-                    padding: 0
-                  }}>
-                    {recentExperience.map((experience) => (
-                      <ResumePreviewCard key={experience._id} experience={experience} />
-                    ))}
-                  </div>
-                ) : (
-                  <div className="resume-preview-cards" style={{
-                    display: 'flex',
-                    flexWrap: 'wrap',
-                    gap: '20px',
-                    margin: 0,
-                    padding: 0
-                  }}>
-                    <div className="resume-preview-placeholder" style={{
-                      background: '#f9f9f9',
-                      border: '2px dashed var(--primary-black)',
-                      padding: '30px',
-                      textAlign: 'center',
-                      flex: 1,
-                    }}>
-                      <div className="resume-preview-header">
-                        <h4>No Experience Added Yet</h4>
-                      </div>
-                      <div className="resume-preview-company">
-                        Add your work experience through Sanity Studio to display it here.
-                      </div>
-                    </div>
-                  </div>
-                )}
-              </div>
-              
-              <div className="home-blog-button" style={{
-                alignSelf: 'center',
-                margin: 0,
-                paddingTop: 0,
-                paddingBottom: 0
-              }}>
-                <Link 
-                  href="/resume" 
-                  className="btn-primary home-blog-view-all"
-                >
-                  View Full Resume →
-                </Link>
-              </div>
-            </div>
-          </section>
-
-          {/* Q&A Section */}
-          <section className="qa-section">
-            <div className="section-divider">Q&A</div>
-            <div className="qa-home-container">
-              <div className="qa-home-content">
-                {featuredQA.length > 0 ? (
-                  <div className="qa-cards-row">
-                    {featuredQA.slice(0, 2).map((post, index) => (
-                      <HomeQACard key={post._id} post={post} index={index} />
-                    ))}
-                  </div>
-                ) : (
-                  <div className="qa-cards-row">
-                    <div className="qa-card-vertical qa-placeholder-vertical">
-                      <div className="qa-question-vertical">
-                        <div>
-                          <h3>No Featured Q&As Yet</h3>
-                        </div>
-                      </div>
-                      <div className="qa-answer-vertical">
-                        <div>
-                          <p>Mark some Q&A items as featured in Sanity Studio to display them here as a preview.</p>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="qa-card-vertical qa-placeholder-vertical">
-                      <div className="qa-question-vertical">
-                        <div>
-                          <h3>Coming Soon</h3>
-                        </div>
-                      </div>
-                      <div className="qa-answer-vertical">
-                        <div>
-                          <p>More Q&A content will be added here as the site grows and develops.</p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                )}
-              </div>
-              
-              <div className="home-blog-button">
-                <Link 
-                  href="/qa" 
-                  className="btn-primary home-blog-view-all"
-                >
-                  View All Q&As →
                 </Link>
               </div>
             </div>

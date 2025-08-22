@@ -19,10 +19,10 @@ const Header: React.FC = () => {
   // Define your navigation links
   const navLinks: NavLink[] = [
     { href: '/', label: 'HOME', key: 'home' },
-    { href: '/blog', label: 'BLOG', key: 'blog' },
-    { href: '/portfolio', label: 'PORTFOLIO', key: 'portfolio' },
-    { href: '/qa', label: 'Q+A', key: 'qa' },
     { href: '/resume', label: 'RESUME', key: 'resume' },
+    { href: '/portfolio', label: 'WORK', key: 'portfolio' },
+    { href: '/qa', label: 'Q+A', key: 'qa' },
+    { href: '/blog', label: 'BLOG', key: 'blog' },
     { href: '/contact', label: 'CONTACT', key: 'contact' },
   ];
 

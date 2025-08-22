@@ -155,9 +155,25 @@ export default async function BlogPostPage({
       <article className="bg-white min-h-full">
         <div className="home-window">
         {/* Header Section */}
-        <header style={{ marginBottom: '52px', textAlign: 'center' }}>
-          {/* Title */}
-          <h1 className="hero-name" style={{ fontSize: '80px', marginBottom: '16px' }}>
+        <header style={{ 
+          marginBottom: '52px', 
+          textAlign: 'center',
+          maxWidth: '100%',
+          width: '100%',
+          padding: '0 20px', // Add some padding for mobile
+          boxSizing: 'border-box'
+        }}>
+          {/* Title with additional constraints */}
+          <h1 
+            className="hero-name" 
+            style={{ 
+              maxWidth: '100%',
+              wordBreak: 'break-word', // Additional fallback
+              whiteSpace: 'normal',
+              overflowWrap: 'anywhere', // Most aggressive wrapping
+              lineHeight: '1.0' // Increased from 1.1 to give more breathing room
+            }}
+          >
             {post.title}
           </h1>
           

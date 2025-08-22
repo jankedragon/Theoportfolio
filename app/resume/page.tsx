@@ -156,9 +156,6 @@ export default async function ResumePage() {
           <div className="page-hero">
             <div className="page-hero-content">
               <h1 className="page-hero-title">Resume</h1>
-              <p className="page-hero-text">
-                Explore my professional background, skills, and experience. Discover the journey that has shaped my design expertise and creative capabilities.
-              </p>
             </div>
           </div>
 
