@@ -92,7 +92,7 @@ export default function ContactPage() {
 
         // Create FormData object
         const formDataToSend = new FormData()
-        formDataToSend.append('access_key', '808a995e-bc99-4c0a-97e6-627b38030eb3') // Replace with your Web3Forms access key
+        formDataToSend.append('access_key', '166cfb2f-5ca6-4599-ab8a-7425386e1a2b ') // Replace with your Web3Forms access key
         formDataToSend.append('name', formData.name)
         formDataToSend.append('email', formData.email)
         formDataToSend.append('message', formData.message)
