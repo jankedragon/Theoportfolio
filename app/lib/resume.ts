@@ -10,6 +10,14 @@ export async function getExperience() {
       endDate,
       current,
       location,
+      description,
+      companyLogo {
+        asset-> {
+          url,
+          _id
+        },
+        alt
+      },
       bulletPoints,
       order
     }
@@ -33,7 +41,7 @@ export async function getResumeFile() {
     "url": resumePdf.asset->url,
     "originalFilename": resumePdf.asset->originalFilename
   }`
-  
+ 
   try {
     const resumeFile = await client.fetch(query)
     return resumeFile

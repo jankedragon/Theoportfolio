@@ -1,23 +1,77 @@
+'use client'
+
 import { getExperience, getResumeSections, getResumeFile } from '../lib/resume'
 import { PortableText } from '@portabletext/react'
 import Image from 'next/image'
+import { useState, useEffect } from 'react'
 
-export default async function ResumePage() {
-  let experience = []
-  let resumeSections = []
-  let resumeFile = null
-  
-  try {
-    const [experienceData, resumeSectionsData, resumeFileData] = await Promise.all([
-      getExperience(),
-      getResumeSections(),
-      getResumeFile()
-    ])
-    experience = experienceData
-    resumeSections = resumeSectionsData
-    resumeFile = resumeFileData
-  } catch (error) {
-    console.error('Failed to load resume data:', error)
+export default function ResumePage() {
+  const [experience, setExperience] = useState([])
+  const [resumeSections, setResumeSections] = useState([])
+  const [resumeFile, setResumeFile] = useState(null)
+  const [isLoading, setIsLoading] = useState(true)
+  const [error, setError] = useState(null)
+  const [isPdfModalOpen, setIsPdfModalOpen] = useState(false)
+  const [isPdfLoading, setIsPdfLoading] = useState(true)
+
+  useEffect(() => {
+    async function loadResumeData() {
+      try {
+        const [experienceData, resumeSectionsData, resumeFileData] = await Promise.all([
+          getExperience(),
+          getResumeSections(),
+          getResumeFile()
+        ])
+        setExperience(experienceData)
+        setResumeSections(resumeSectionsData)
+        setResumeFile(resumeFileData)
+      } catch (error) {
+        console.error('Failed to load resume data:', error)
+        setError('Failed to load resume data. Please try refreshing the page.')
+      } finally {
+        setIsLoading(false)
+      }
+    }
+
+    loadResumeData()
+  }, [])
+
+  useEffect(() => {
+    if (isPdfModalOpen) {
+      document.body.style.overflow = 'hidden'
+    } else {
+      document.body.style.overflow = 'unset'
+    }
+
+    return () => {
+      document.body.style.overflow = 'unset'
+    }
+  }, [isPdfModalOpen])
+
+  const openPdfModal = () => {
+    setIsPdfModalOpen(true)
+  }
+
+  const closePdfModal = () => {
+    setIsPdfModalOpen(false)
+    setIsPdfLoading(true)
+  }
+
+  if (isLoading) {
+    return (
+      <div className="page-frame">
+        <div className="home-window">
+          <div className="text-center py-16">
+            <div className="w-20 h-20 bg-gray-100 border-2 border-gray-300 flex items-center justify-center mx-auto mb-6">
+              <div className="w-8 h-8 border-2 border-red-600 border-t-transparent rounded-full animate-spin"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    )
+  }
+
+  if (error) {
     return (
       <div className="page-frame">
         <div className="home-window">
@@ -29,7 +83,7 @@ export default async function ResumePage() {
             </div>
             <h3 className="text-xl font-semibold mb-3" style={{ color: 'var(--primary-black)' }}>Unable to load resume</h3>
             <p className="max-w-md mx-auto" style={{ color: 'var(--accent-red)' }}>
-              Failed to load resume data. Please try refreshing the page or contact support if the problem persists.
+              {error}
             </p>
           </div>
         </div>
@@ -142,6 +196,29 @@ export default async function ResumePage() {
           width: 50px !important;
           height: 50px !important;
           align-self: flex-start !important;
+        }
+        
+        .resume-pdf-buttons {
+          flex-direction: column !important;
+          gap: 12px !important;
+        }
+        
+        .resume-pdf-modal-content {
+          margin: 0.5rem !important;
+          max-height: 95vh !important;
+        }
+        
+        .resume-pdf-modal-header {
+          flex-direction: column !important;
+          gap: 1rem !important;
+        }
+        
+        .resume-pdf-modal-info {
+          padding-right: 0 !important;
+        }
+        
+        .resume-pdf-modal-buttons {
+          align-self: flex-end !important;
         }
       }
     </style>
@@ -261,18 +338,21 @@ export default async function ResumePage() {
                             position: 'relative',
                             background: 'var(--primary-white)',
                             border: '1px solid #f0f0f0',
-                            padding: '8px',
+                            padding: '0',
                             display: 'flex',
                             alignItems: 'center',
-                            justifyContent: 'center'
+                            justifyContent: 'center',
+                            overflow: 'hidden'
                           }}>
                             <Image
                               src={job.companyLogo.asset.url}
                               alt={job.companyLogo.alt || `${job.company} logo`}
-                              fill
+                              width={52}
+                              height={52}
                               style={{
                                 objectFit: 'contain',
-                                padding: '4px'
+                                maxWidth: '100%',
+                                maxHeight: '100%'
                               }}
                               sizes="60px"
                             />
@@ -632,7 +712,7 @@ export default async function ResumePage() {
             </div>
           </div>
 
-          {/* PDF Resume Download Section */}
+          {/* PDF Resume Download/Preview Section */}
           {resumeFile && (
             <div style={{
               maxWidth: '1200px',
@@ -652,7 +732,7 @@ export default async function ResumePage() {
                   marginBottom: '16px',
                   color: 'var(--primary-black)'
                 }}>
-                  Download Full Resume
+                  Full Resume PDF
                 </div>
                 <p style={{
                   color: '#666',
@@ -660,40 +740,291 @@ export default async function ResumePage() {
                   marginBottom: '24px',
                   lineHeight: '1.5'
                 }}>
-                  Get a complete PDF version of my resume for your records.
+                  View my complete resume in PDF format or download it for your records.
                 </p>
-                <a 
-                  href={resumeFile.url} 
-                  download={resumeFile.originalFilename || 'resume.pdf'}
-                  className="resume-download-btn"
-                  style={{
-                    display: 'inline-flex',
-                    alignItems: 'center',
-                    gap: '12px',
-                    background: 'var(--accent-red)',
-                    color: 'var(--primary-white)',
-                    padding: '16px 32px',
-                    fontSize: '16px',
-                    fontWeight: '600',
-                    textDecoration: 'none',
-                    boxShadow: '0 4px 12px rgba(139,15,15,0.3)',
-                    transition: 'all 0.2s ease',
-                    border: 'none',
-                    cursor: 'pointer'
-                  }}
-                >
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="square" strokeLinejoin="miter">
-                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
-                    <polyline points="7,10 12,15 17,10"/>
-                    <line x1="12" y1="15" x2="12" y2="3"/>
-                  </svg>
-                  Download PDF Resume
-                </a>
+                <div className="resume-pdf-buttons" style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  gap: '16px',
+                  flexWrap: 'wrap'
+                }}>
+                  <button
+                    onClick={openPdfModal}
+                    style={{
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      gap: '12px',
+                      background: 'var(--accent-red)',
+                      color: 'var(--primary-white)',
+                      padding: '16px 32px',
+                      fontSize: '16px',
+                      fontWeight: '600',
+                      textDecoration: 'none',
+                      border: 'none',
+                      cursor: 'pointer',
+                      boxShadow: '0 4px 12px rgba(139,15,15,0.3)',
+                      transition: 'all 0.2s ease'
+                    }}
+                    
+                  >
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="square" strokeLinejoin="miter">
+                      <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                      <polyline points="14,2 14,8 20,8"/>
+                      <line x1="16" y1="13" x2="8" y2="13"/>
+                      <line x1="16" y1="17" x2="8" y2="17"/>
+                      <polyline points="10,9 9,9 8,9"/>
+                    </svg>
+                    Preview Resume
+                  </button>
+                  <a 
+                    href={resumeFile.url} 
+                    download={resumeFile.originalFilename || 'resume.pdf'}
+                    style={{
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      gap: '12px',
+                      background: 'transparent',
+                      color: 'var(--accent-red)',
+                      padding: '16px 32px',
+                      fontSize: '16px',
+                      fontWeight: '600',
+                      textDecoration: 'none',
+                      border: '2px solid var(--accent-red)',
+                      cursor: 'pointer',
+                      transition: 'all 0.2s ease'
+                    }}
+                   
+                  >
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="square" strokeLinejoin="miter">
+                      <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                      <polyline points="7,10 12,15 17,10"/>
+                      <line x1="12" y1="15" x2="12" y2="3"/>
+                    </svg>
+                    Download PDF
+                  </a>
+                </div>
               </div>
             </div>
           )}
         </div>
       </div>
+
+      {/* PDF Modal */}
+      {isPdfModalOpen && resumeFile && (
+        <>
+          {/* Backdrop */}
+          <div 
+            className="resume-pdf-modal-backdrop"
+            onClick={closePdfModal}
+            style={{
+              position: 'fixed',
+              inset: 0,
+              zIndex: 50,
+              background: 'rgba(23, 19, 19, 0.8)',
+              backdropFilter: 'blur(4px)',
+              animation: 'fadeIn 0.3s ease-out'
+            }}
+          />
+          
+          {/* Modal Container */}
+          <div 
+            className="resume-pdf-modal-container"
+            style={{
+              position: 'fixed',
+              inset: 0,
+              zIndex: 50,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              padding: '1rem'
+            }}
+          >
+            <div 
+              className="resume-pdf-modal-content"
+              onClick={(e) => e.stopPropagation()}
+              style={{
+                position: 'relative',
+                background: 'var(--primary-white)',
+                border: '2px solid var(--primary-black)',
+                borderRadius: 0,
+                boxShadow: '0 25px 50px -12px rgba(23, 19, 19, 0.4)',
+                width: '100%',
+                maxWidth: '72rem',
+                maxHeight: '90vh',
+                overflow: 'hidden',
+                animation: 'modalEnter 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards'
+              }}
+            >
+              {/* Header */}
+              <div 
+                className="resume-pdf-modal-header"
+                style={{
+                  display: 'flex',
+                  alignItems: 'flex-start',
+                  justifyContent: 'space-between',
+                  padding: '1.5rem',
+                  borderBottom: '2px solid var(--primary-black)'
+                }}
+              >
+                <div 
+                  className="resume-pdf-modal-info"
+                  style={{
+                    flex: 1,
+                    paddingRight: '1rem'
+                  }}
+                >
+                  <h2 style={{
+                    fontSize: '1.5rem',
+                    fontWeight: 'bold',
+                    color: 'var(--primary-black)',
+                    marginBottom: '0.5rem'
+                  }}>
+                    Resume PDF
+                  </h2>
+                  <p style={{
+                    color: 'var(--primary-black)',
+                    opacity: 0.7,
+                    fontSize: '0.875rem',
+                    lineHeight: '1.5',
+                    marginBottom: '0.75rem'
+                  }}>
+                    Complete resume in PDF format
+                  </p>
+                </div>
+                
+                <div 
+                  className="resume-pdf-modal-buttons"
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '0.75rem'
+                  }}
+                >
+                  <a
+                    href={resumeFile.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    download={resumeFile.originalFilename || 'resume.pdf'}
+                    style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '0.5rem',
+                      background: 'var(--accent-red)',
+                      color: 'var(--primary-white)',
+                      padding: '0.5rem 1rem',
+                      borderRadius: 0,
+                      fontSize: '0.875rem',
+                      fontWeight: '500',
+                      border: 'none',
+                      cursor: 'pointer',
+                      textDecoration: 'none',
+                      transition: 'all 0.2s ease'
+                    }}
+                  
+                  >
+                    <svg style={{width: '1rem', height: '1rem'}} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                    </svg>
+                    Download
+                  </a>
+                  <button
+                    onClick={closePdfModal}
+                    style={{
+                      padding: '0.5rem',
+                      color: 'var(--primary-black)',
+                      background: 'transparent',
+                      border: '2px solid var(--primary-black)',
+                      borderRadius: 0,
+                      cursor: 'pointer',
+                      transition: 'all 0.2s ease'
+                    }}
+                    
+                  >
+                    <svg style={{width: '1rem', height: '1rem'}} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                  </button>
+                </div>
+              </div>
+
+              {/* PDF Viewer */}
+              <div style={{
+                position: 'relative',
+                height: 'calc(90vh - 140px)'
+              }}>
+                {isPdfLoading && (
+                  <div style={{
+                    position: 'absolute',
+                    inset: 0,
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    background: 'var(--primary-white)',
+                    zIndex: 10
+                  }}>
+                    <div style={{
+                      display: 'flex',
+                      flexDirection: 'column',
+                      alignItems: 'center',
+                      gap: '0.75rem'
+                    }}>
+                      <div style={{
+                        width: '2rem',
+                        height: '2rem',
+                        border: '3px solid var(--accent-red)',
+                        borderTop: '3px solid transparent',
+                        borderRadius: '50%',
+                        animation: 'spin 1s linear infinite'
+                      }}></div>
+                      <p style={{
+                        fontSize: '0.875rem',
+                        color: 'var(--primary-black)',
+                        opacity: 0.7,
+                        margin: 0
+                      }}>
+                        Loading PDF...
+                      </p>
+                    </div>
+                  </div>
+                )}
+                <iframe
+                  src={`${resumeFile.url}#view=FitH&toolbar=1&navpanes=1&scrollbar=1`}
+                  style={{
+                    width: '100%',
+                    height: '100%',
+                    border: 0
+                  }}
+                  onLoad={() => setIsPdfLoading(false)}
+                  title="Resume PDF"
+                />
+              </div>
+            </div>
+          </div>
+
+          <style jsx>{`
+            @keyframes fadeIn {
+              from { opacity: 0; }
+              to { opacity: 1; }
+            }
+            
+            @keyframes modalEnter {
+              from {
+                opacity: 0;
+                transform: scale(0.95) translateY(20px);
+              }
+              to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+              }
+            }
+            
+            @keyframes spin {
+              to { transform: rotate(360deg); }
+            }
+          `}</style>
+        </>
+      )}
     </>
   )
 }
